@@ -2,7 +2,7 @@
 #define HITTABLE_H
 
 #include "Ray.hpp"
-
+#include "Interval.h"
 
 struct HitResult {
     Point3D hit_point;
@@ -23,7 +23,7 @@ class IHittable {
 public:
     virtual ~IHittable() = default;
 
-    virtual bool CheckHit(const Ray& ray_to_check, double min_ray_t, double max_ray_t, HitResult& record) const = 0;
+    virtual bool CheckHit(const Ray& ray_to_check, Interval<double> distance_interval, HitResult& record) const = 0;
 };
 
 #endif

@@ -9,5 +9,5 @@ include_directories(src/lib src/helpers)
 
 add_executable(raytracing_test
         src/main.cpp
-        src/lib/hittables/Sphere.cpp)
+)
 

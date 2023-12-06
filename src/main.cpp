@@ -1,14 +1,14 @@
 
 #include "Ray.hpp"
 #include "ColorRGB.hpp"
-#include "hittables/Sphere.h"
+#include "hittables/Sphere.hpp"
 #include "helpers/TimeTracker.hpp"
 
 
 ColorRGB ray_color(const Ray& r, const Sphere& sp) {
 
     HitResult record;
-    if (sp.CheckHit(r, 0.0, 10.0, record)) {
+    if (sp.CheckHit(r, Interval{0.0, 10.0}, record)) {
         Vector3D N = unit_vector(r.at(record.t) - sp.GetCenter());
         return 0.5 * ColorRGB(N.X() + 1, N.Y() + 1, N.Z() + 1);
     }
