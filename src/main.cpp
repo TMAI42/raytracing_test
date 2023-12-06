@@ -78,6 +78,7 @@ int main() {
             }
             std::cout << '\n';
         }
+        std::clog << "\rDone.                 \n";
     }
 
 }
