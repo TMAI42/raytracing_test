@@ -6,7 +6,7 @@
 struct hit_record {
     point3D hit_point;
     vector3D hit_normal;
-    double t; // actually this is distance from previous hit, but conventionally it is called t
+    double t; // actually this is distance from ray casting point, but conventionally it is called t
     bool outside_hit;
 
     // Sets the hit record normal vector.

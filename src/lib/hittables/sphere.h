@@ -13,6 +13,9 @@ public:
 
     bool hit(const ray& ray_to_check, double min_ray_t, double max_ray_t, hit_record& record) const ;
 
+    point3D get_center() const {return center;};
+
+
 private:
     double radius;
     point3D center;
