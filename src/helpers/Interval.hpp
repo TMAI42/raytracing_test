@@ -2,8 +2,8 @@
 // Created by tmai42 on 12/7/23.
 //
 
-#ifndef INTERVAL_H
-#define INTERVAL_H
+#ifndef INTERVAL_HPP
+#define INTERVAL_HPP
 
 #include <concepts>
 #include <limits>
@@ -89,4 +89,4 @@ struct Interval {
 };
 
 
-#endif //INTERVAL_H
+#endif //INTERVAL_HPP

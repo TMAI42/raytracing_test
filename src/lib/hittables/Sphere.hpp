@@ -7,7 +7,7 @@
 
 #include "IHittable.hpp"
 #include "Vector3D.hpp"
-#include "Interval.h"
+#include "Interval.hpp"
 
 class Sphere {
 public:

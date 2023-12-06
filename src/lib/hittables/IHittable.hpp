@@ -2,7 +2,7 @@
 #define HITTABLE_H
 
 #include "Ray.hpp"
-#include "Interval.h"
+#include "Interval.hpp"
 
 struct HitResult {
     Point3D hit_point;
