@@ -3,7 +3,6 @@
 #include "lib/color.hpp"
 
 
-//TODO: simplify to reduce multiplication on 2
 double hit_sphere(const point3D & sphere_center, double sphere_radius, const ray& ray_to_check) {
     // Calculate the vector from the ray's origin to the center of the sphere
     const vector3D origin_to_center = ray_to_check.origin() - sphere_center;
@@ -21,7 +20,7 @@ double hit_sphere(const point3D & sphere_center, double sphere_radius, const ray
     // b is derived from rearranging the sphere's equation to form a quadratic equation
     // in terms of t. It involves the dot product of the vector from the ray's origin to
     // the sphere center and the ray's direction, multiplied by 2.
-    const double b = 2.0 * dot(origin_to_center, ray_to_check.direction());
+    const double half_b = dot(origin_to_center, ray_to_check.direction());
 
     // c represents the square of the length of the origin_to_center vector minus
     // the square of the sphere's radius. This comes from the sphere's equation
@@ -32,13 +31,13 @@ double hit_sphere(const point3D & sphere_center, double sphere_radius, const ray
     // from the quadratic formula. A positive discriminant indicates two points of
     // intersection, zero indicates one point (tangent), and a negative discriminant
     // means no intersection.
-    const double discriminant = b * b - 4 * a * c;
+    const double discriminant = half_b * half_b - a * c;
 
     // If the discriminant is greater than or equal to zero, the ray intersects the sphere.
     if (discriminant < 0) {
         return -1.0;
     } else {
-        return (-b - sqrt(discriminant) ) / (2.0*a);
+        return (-half_b - sqrt(discriminant) ) / a;
     }
 }
 
