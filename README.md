@@ -32,12 +32,12 @@ To generate a .ppm image, run the executable and redirect the output to a file:
 ./raytracing_test > image.ppm
 ```
 
-## Code Structure
-- `main.cpp`: The main driver of the program. It sets up the rendering parameters and initiates the rendering process.
-- `lib/ray.hpp`: Defines the `ray` class, which represents rays in the ray tracing algorithm.
-- `lib/color.hpp`: Handles color representations and color utility functions.
-- `hit_sphere()`: A function in `main.cpp` that checks if a ray hits a given sphere.
-- `ray_color()`: Determines the color of a pixel based on the ray's interaction with objects in the scene.
+## Code Convention
+
+In this project, we adhere to a C-style coding convention for most internal implementations. This decision is rooted in the following reason:
+
+- **Performance Optimization**: C-style coding conventions are known for their focus on performance. By keeping the code close to the lower-level operations, we aim to maximize efficiency and optimize resource usage.
+
 
 ## Output
 The output image is saved in the PPM format. PPM files can be viewed with various image viewers or converted to other formats using image processing tools.
