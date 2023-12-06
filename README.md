@@ -38,7 +38,6 @@ In this project, we adhere to a C-style coding convention for most internal impl
 
 - **Performance Optimization**: C-style coding conventions are known for their focus on performance. By keeping the code close to the lower-level operations, we aim to maximize efficiency and optimize resource usage.
 
-
 ## Output
 The output image is saved in the PPM format. PPM files can be viewed with various image viewers or converted to other formats using image processing tools.
 

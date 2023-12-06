@@ -1,3 +1,7 @@
+//
+// Created by tmai42 on 12/5/23.
+//
+
 #ifndef RAY_HPP
 #define RAY_HPP
 
