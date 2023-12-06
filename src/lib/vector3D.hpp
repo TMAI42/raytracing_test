@@ -1,6 +1,7 @@
 //
 // Created by tmai42 on 12/5/23.
 //
+
 #ifndef VECTOR_3D_HPP
 #define VECTOR_3D_HPP
 
@@ -20,7 +21,7 @@ struct vector3D {
 
     [[nodiscard]] double z() const { return XYZ[2]; }
 
-    vector3D operator-() { return vector3D{-XYZ[0], -XYZ[1], -XYZ[2]}; }
+    vector3D operator-() const{ return vector3D{-XYZ[0], -XYZ[1], -XYZ[2]}; }
 
     double operator[](int i) const { return XYZ[i]; }
 
