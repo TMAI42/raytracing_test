@@ -1,21 +1,21 @@
 
-#include "lib/ray.hpp"
-#include "lib/color.hpp"
-#include "lib/hittables/sphere.h"
+#include "Ray.hpp"
+#include "ColorRGB.hpp"
+#include "hittables/Sphere.h"
 
 
-color ray_color(const ray& r, const sphere& sp) {
+ColorRGB ray_color(const Ray& r, const Sphere& sp) {
 
-    hit_record record;
-    if (sp.hit(r, 0.0, 10.0, record)) {
-        vector3D N = unit_vector(r.at(record.t) - sp.get_center());
-        return 0.5*color(N.x()+1, N.y()+1, N.z()+1);
+    HitResult record;
+    if (sp.CheckHit(r, 0.0, 10.0, record)) {
+        Vector3D N = unit_vector(r.at(record.t) - sp.GetCenter());
+        return 0.5 * ColorRGB(N.X() + 1, N.Y() + 1, N.Z() + 1);
     }
 
     //TODO: add gradient as brush
-    const vector3D unit_direction = unit_vector(r.direction());
-    const double a = 0.5*(unit_direction.y() + 1.0);
-    return (1.0-a)*color(1.0, 1.0, 1.0) + a*color(0.5, 0.7, 1.0);
+    const Vector3D unit_direction = unit_vector(r.GetDirection());
+    const double a = 0.5*(unit_direction.Y() + 1.0);
+    return (1.0-a) * ColorRGB(1.0, 1.0, 1.0) + a * ColorRGB(0.5, 0.7, 1.0);
 }
 
 //TODO: split into Image, Camera and Render as separate components
@@ -39,24 +39,24 @@ int main() {
     constexpr double viewport_width = viewport_height * (static_cast<double>(image_width)/image_height);
 
     constexpr double focal_length = 1.0;
-    const point3D camera_center {0, 0, 0};
+    const Point3D camera_center {0, 0, 0};
 
     // Calculate the vectors across the horizontal and down the vertical viewport edges.
-    const vector3D viewport_u {viewport_width, 0, 0};
-    const vector3D viewport_v {0, -viewport_height, 0};
+    const Vector3D viewport_u {viewport_width, 0, 0};
+    const Vector3D viewport_v {0, -viewport_height, 0};
 
     // Calculate the horizontal and vertical delta vectors from pixel to pixel.
-    const vector3D pixel_delta_u = viewport_u / image_width;
-    const vector3D pixel_delta_v = viewport_v / image_height;
+    const Vector3D pixel_delta_u = viewport_u / image_width;
+    const Vector3D pixel_delta_v = viewport_v / image_height;
 
     // Calculate the location of the upper left pixel.
-    const point3D viewport_upper_left = camera_center
-                               - vector3D(0, 0, focal_length) - viewport_u/2 - viewport_v/2;
-    const point3D pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
+    const Point3D viewport_upper_left = camera_center
+                                        - Vector3D(0, 0, focal_length) - viewport_u / 2 - viewport_v / 2;
+    const Point3D pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
 
     // Scene
 
-    sphere sp{{0,0,-1}, 0.5};
+    Sphere sphere{{0, 0, -1}, 0.5};
 
     // Render
 
@@ -65,11 +65,11 @@ int main() {
     for (int j = 0; j < image_height; ++j) {
         std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
         for (int i = 0; i < image_width; ++i) {
-            point3D pixel_center = pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
-            vector3D ray_direction = pixel_center - camera_center;
-            ray r(camera_center, ray_direction);
+            Point3D pixel_center = pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
+            Vector3D ray_direction = pixel_center - camera_center;
+            Ray ray(camera_center, ray_direction);
 
-            color pixel_color = ray_color(r, sp);
+            ColorRGB pixel_color = ray_color(ray, sphere);
             write_color(std::cout, pixel_color);
 
             std::cout << '\t';
