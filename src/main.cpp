@@ -2,6 +2,7 @@
 #include "Ray.hpp"
 #include "ColorRGB.hpp"
 #include "hittables/Sphere.h"
+#include "helpers/TimeTracker.hpp"
 
 
 ColorRGB ray_color(const Ray& r, const Sphere& sp) {
@@ -24,7 +25,7 @@ int main() {
     // Image
 
     constexpr double aspect_ratio = 16.0 / 9.0;
-    constexpr u_int32_t image_width = 400;
+    constexpr u_int32_t image_width = 2160;
 
     // Calculate the image height, and ensure that it's at least 1.
     constexpr u_int32_t image_height = []() constexpr {
@@ -59,22 +60,24 @@ int main() {
     Sphere sphere{{0, 0, -1}, 0.5};
 
     // Render
+    {
+        ScopeTimeTracker rendering_time_tracker("Rendering");
+        std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
 
-    std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
+        for (int j = 0; j < image_height; ++j) {
+            std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
+            for (int i = 0; i < image_width; ++i) {
+                Point3D pixel_center = pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
+                Vector3D ray_direction = pixel_center - camera_center;
+                Ray ray(camera_center, ray_direction);
 
-    for (int j = 0; j < image_height; ++j) {
-        std::clog << "\rScanlines remaining: " << (image_height - j) << ' ' << std::flush;
-        for (int i = 0; i < image_width; ++i) {
-            Point3D pixel_center = pixel00_loc + (i * pixel_delta_u) + (j * pixel_delta_v);
-            Vector3D ray_direction = pixel_center - camera_center;
-            Ray ray(camera_center, ray_direction);
+                ColorRGB pixel_color = ray_color(ray, sphere);
+                write_color(std::cout, pixel_color);
 
-            ColorRGB pixel_color = ray_color(ray, sphere);
-            write_color(std::cout, pixel_color);
-
-            std::cout << '\t';
+                std::cout << '\t';
+            }
+            std::cout << '\n';
         }
-        std::cout << '\n';
     }
-    std::clog << "\rDone.                 \n";
+
 }
