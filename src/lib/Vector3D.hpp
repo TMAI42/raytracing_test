@@ -55,9 +55,8 @@ struct Vector3D {
 
 };
 
-
+// This is a good practice to differ between point and vector, since this is zero code abstraction
 using Point3D = Vector3D;
-
 
 inline std::ostream &operator<<(std::ostream &out, const Vector3D &v) {
     return out << v.xyz[0] << ' ' << v.xyz[1] << ' ' << v.xyz[2];

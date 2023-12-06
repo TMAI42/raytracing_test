@@ -17,7 +17,6 @@ struct HitResult {
         hit_normal = outside_hit ? outward_normal : -outward_normal;
     }
 
-
 };
 
 class IHittable {
