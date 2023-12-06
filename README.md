@@ -31,8 +31,6 @@ To generate a .ppm image, run the executable and redirect the output to a file:
 ```bash
 ./raytracing_test > image.ppm
 ```
-Ось приклад секції "Code Specification" для вашого файлу README.md, яка описує структуру та логіку коду вашого проекту:
-
 
 ## Code Specification
 
