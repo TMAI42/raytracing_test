@@ -5,15 +5,18 @@
 Basic ray tracing renderer implemented in C++. 
 It is done in educational purposes and still in development stage.
 
+![](example.png)
+
+**Warning:** Do not use this code in your production, it is in early WIP stage  
+
 ### Prerequisites
 - C++23 compatible compiler
 - CMake (version 3.26 or higher)
 
-### Compilation
-1. Clone the repository.
-2. Navigate to the project directory.
-3. Build project with cmake:
 
+## Quick Start
+
+### Build
 ```bash
 mkdir build
 cd build
@@ -21,7 +24,7 @@ cmake ..
 make
 ```
 
-### Running 
+### Run
 To generate a .ppm image, run the executable and redirect the output to a file:
 
 ```bash
