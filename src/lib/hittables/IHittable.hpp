@@ -18,12 +18,16 @@ struct HitResult {
     }
 
 };
-
+/* class IHittable
+ *
+ * Base interface for all hittable objects
+ *
+ * */
 class IHittable {
 public:
     virtual ~IHittable() = default;
 
-    virtual bool CheckHit(const Ray& ray_to_check, Interval<double> distance_interval, HitResult& record) const = 0;
+    virtual bool CheckHit(const Ray& ray_to_check, const Interval<double> &distance_interval, HitResult& record) const = 0;
 };
 
 #endif

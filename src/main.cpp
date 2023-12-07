@@ -2,15 +2,15 @@
 #include "Ray.hpp"
 #include "ColorRGB.hpp"
 #include "hittables/Sphere.hpp"
+#include "hittables/Scene.hpp"
 #include "helpers/TimeTracker.hpp"
 
 
-ColorRGB ray_color(const Ray& r, const Sphere& sp) {
+ColorRGB ray_color(const Ray& r, const IHittable& scene) {
 
-    HitResult record;
-    if (sp.CheckHit(r, Interval{0.0, 10.0}, record)) {
-        Vector3D N = unit_vector(r.at(record.t) - sp.GetCenter());
-        return 0.5 * ColorRGB(N.X() + 1, N.Y() + 1, N.Z() + 1);
+    HitResult hit_result;
+    if (scene.CheckHit(r, Interval{0.0, 100.0}, hit_result)) { //TODO: add Interval as parameter
+        return 0.5 * (hit_result.hit_normal + ColorRGB(1, 1, 1));
     }
 
     //TODO: add gradient as brush
@@ -56,8 +56,10 @@ int main() {
     const Point3D pixel00_loc = viewport_upper_left + 0.5 * (pixel_delta_u + pixel_delta_v);
 
     // Scene
-
-    Sphere sphere{{0, 0, -1}, 0.5};
+    Scene scene;
+    scene.AddObject(std::make_shared<Sphere>(Point3D(0,0,-1), 0.5));
+    scene.AddObject(std::make_shared<Sphere>(Point3D (0,-100.5,-1), 100));
+    scene.AddObject(std::make_shared<Sphere>(Point3D (3,0,-3), 2));
 
     // Render
     {
@@ -71,7 +73,7 @@ int main() {
                 Vector3D ray_direction = pixel_center - camera_center;
                 Ray ray(camera_center, ray_direction);
 
-                ColorRGB pixel_color = ray_color(ray, sphere);
+                ColorRGB pixel_color = ray_color(ray, scene);
                 write_color(std::cout, pixel_color);
 
                 std::cout << '\t';

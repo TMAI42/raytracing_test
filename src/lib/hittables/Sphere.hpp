@@ -9,13 +9,13 @@
 #include "Vector3D.hpp"
 #include "Interval.hpp"
 
-class Sphere {
+class Sphere : public IHittable {
 public:
     Sphere(Point3D center, double radius) : m_center(center), m_radius(radius) {}
 
     [[nodiscard]] Point3D GetCenter() const { return m_center; };
 
-    bool CheckHit(const Ray &ray_to_check, Interval<double> distance_interval, HitResult &record) const{
+    bool CheckHit(const Ray &ray_to_check, const Interval<double> &distance_interval, HitResult &record) const override {
         // Calculate the vector from the Ray's GetOrigin to the m_center of the Sphere
         const Vector3D origin_to_center = ray_to_check.GetOrigin() - m_center;
 
@@ -52,9 +52,9 @@ public:
 
         // Now we are looking for minimal intersection distance in range `valid_intersection_distance`
         double valid_intersection_distance = (-half_b - discriminant_sqrt) / a;
-        if (!distance_interval.surrounds(valid_intersection_distance)) {
+        if (!distance_interval.Surrounds(valid_intersection_distance)) {
             valid_intersection_distance = (-half_b + discriminant_sqrt) / a;
-            if (!distance_interval.surrounds(valid_intersection_distance))
+            if (!distance_interval.Surrounds(valid_intersection_distance))
                 return false;
         }
 

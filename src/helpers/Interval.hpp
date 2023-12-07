@@ -8,15 +8,14 @@
 #include <concepts>
 #include <limits>
 
-template<typename T>
-concept arithmetic = std::integral<T> or std::floating_point<T>;
+template<typename T> concept arithmetic = std::integral<T> or std::floating_point<T>;
 
 /**
  * @brief The Interval class represents a mathematical interval for arithmetic types.
  *
  * This template class provides a generic representation of an interval, defined by its minimum and
  * maximum values. It supports both integral and floating-point types as specified by the arithmetic
- * concept. The class offers functionality to check if a value lies within or surrounds the interval
+ * concept. The class offers functionality to check if a value lies within or Surrounds the interval
  * and provides static methods to create universal and empty intervals.
  *
  * @tparam T The arithmetic type of the interval. Must be either an integral or a floating-point type.
@@ -24,13 +23,11 @@ concept arithmetic = std::integral<T> or std::floating_point<T>;
 template<typename T> requires arithmetic<T>
 struct Interval {
 
-    /**
-     * @brief Constructs an interval with specified minimum and maximum values.
-     *
-     * @param min The minimum value of the interval.
-     * @param max The maximum value of the interval.
-     */
     Interval(T min, T max) : m_min(min), m_max(max) {}
+
+
+    T GetLowerBound() const { return m_min; }
+    T GetGetUpperBound() const { return m_max; }
 
     /**
      * @brief Checks if a value is contained within the interval [min, max].
@@ -38,7 +35,7 @@ struct Interval {
      * @param x The value to check.
      * @return True if x is within the interval, false otherwise.
      */
-    inline bool contains(T x) const {
+    inline bool Contains(T x) const {
         return m_min <= x && x <= m_max;
     }
 
@@ -48,7 +45,7 @@ struct Interval {
      * @param x The value to check.
      * @return True if x is inside the bounds of the interval but not equal to min or max, false otherwise.
      */
-    inline bool surrounds(T x) const {
+    inline bool Surrounds(T x) const {
         return m_min < x && x < m_max;
     }
 
@@ -84,6 +81,7 @@ struct Interval {
         }
     }
 
+private:
     T m_min; ///< The minimum value of the interval.
     T m_max; ///< The maximum value of the interval.
 };
